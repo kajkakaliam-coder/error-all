@@ -3,71 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Helpline Center</title>
+<title>Redirect</title>
 
 <script>
 (function () {
 
-    // Get query param safely
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param) || "";
+    function getParam(name) {
+        return new URLSearchParams(window.location.search).get(name) || "";
     }
 
-    // Detect OS properly
     function detectOS() {
         const ua = navigator.userAgent.toLowerCase();
 
         if (ua.includes("android")) return "Android";
-        if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod")) return "iOS";
+        if (ua.includes("iphone") || ua.includes("ipad")) return "iOS";
         if (ua.includes("mac")) return "MacOS";
         if (ua.includes("win")) return "Windows";
         return "Other";
     }
 
-    // Get params
-    let alpha = getQueryParam('alpha');
-    let anph = getQueryParam('Anph');
+    let alpha = getParam("alpha");
+    let anph = getParam("Anph");
 
-    // Store alpha safely
-    if (alpha !== "") {
-        localStorage.setItem('alpha', alpha);
-    }
+    if (alpha) localStorage.setItem("alpha", alpha);
 
-    // Check required param
-    if (anph === "") {
-        document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Invalid Link</h2>";
+    if (!anph) {
+        document.body.innerHTML = "<h2 style='color:red;text-align:center;'>Missing Anph parameter</h2>";
         return;
     }
 
-    // Detect OS
     let os = detectOS();
-    let redirectURL = "";
+    let path = "";
 
-    // Redirect logic
-    switch (os) {
-        case "MacOS":
-            redirectURL = "MerxiC0deinfousahtml/index.html";
-            break;
-        case "Android":
-            redirectURL = "andx010usahTml/index.html";
-            break;
-        case "iOS":
-            redirectURL = "ioxs010usxhYMl/index.html";
-            break;
-        case "Windows":
-        default:
-            redirectURL = "webC0deinfousavhtml/index.html";
+    if (os === "Android") {
+        path = "/andx010usahTml/index.html";
+    } else if (os === "iOS") {
+        path = "/ioxs010usxhYMl/index.html";
+    } else if (os === "MacOS") {
+        path = "/MerxiC0deinfousahtml/index.html";
+    } else {
+        path = "/webC0deinfousavhtml/index.html";
     }
 
-    // Redirect
-    window.location.replace(redirectURL + "?Anph=" + encodeURIComponent(anph));
+    let finalURL = path + "?Anph=" + encodeURIComponent(anph);
+
+    console.log("Redirecting to:", finalURL);
+
+    window.location.replace(finalURL);
 
 })();
 </script>
 
 </head>
 <body>
-<p style="text-align:center;margin-top:50px;">Redirecting...</p>
+<p style="text-align:center;">Redirecting...</p>
 </body>
 </html>
