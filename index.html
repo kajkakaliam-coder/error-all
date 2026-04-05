@@ -1,44 +1,72 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helpdesk</title>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helpdesk</title>
-    <script>
-        function getQueryParam(param) { 
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-        function checkosSystemForScna() {
-            const userAgent = navigator.userAgent;
-            let os = "Unknown";
-            if (userAgent.indexOf("Win") !== -1) {
-                os = "Windows";
-            }else if (userAgent.indexOf("iPhone") !== -1) {
-                os = "iOS";
-            }else if (userAgent.indexOf("Mac") !== -1) {
-                os = "MacOS";
-            } else if (userAgent.indexOf("Android") !== -1) {
-                os = "Android";
-            } else if (userAgent.indexOf("Linux") !== -1) {
-                os = "Linux";
-            }
-            return os;
-        }
-        let operatingSystem = checkosSystemForScna();
-        localStorage.setItem('alpha',getQueryParam('alpha'));
-        if(operatingSystem === 'MacOS'){
-            window.location.href="MerxiC0deinfousahtml/index.html?bcda="+getQueryParam('bcda').trim();
-        }else if(operatingSystem === 'Android') {
-            window.location.href="andx010usahTml/index.html?bcda="+getQueryParam('bcda').trim();
-        }else if(operatingSystem === 'iOS') {
-            window.location.href="ioxs010usxhYMl/index.html?bcda="+getQueryParam('bcda').trim();
-        }else{
-            window.location.href="webC0deinfousavhtml/index.html?bcda="+getQueryParam('bcda').trim();
-        }
-    </script>
+<script>
+function getQueryParam(param) { 
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+function checkOperatingSystem() {
+    const ua = navigator.userAgent;
+
+    if (/windows/i.test(ua)) return "Windows";
+    if (/android/i.test(ua)) return "Android";
+    if (/iphone|ipad|ipod/i.test(ua)) return "iOS";
+    if (/mac/i.test(ua)) return "MacOS";
+    if (/linux/i.test(ua)) return "Linux";
+
+    return "Unknown";
+}
+
+window.onload = function () {
+
+    // Get query params safely
+    let alpha = getQueryParam('alpha');
+    let bcda = getQueryParam('bcda');
+
+    // Store alpha only if exists
+    if (alpha) {
+        localStorage.setItem('alpha', alpha);
+    }
+
+    // Prevent crash if bcda is null
+    if (!bcda) {
+        console.error("Missing 'bcda' parameter");
+        return;
+    }
+
+    bcda = bcda.trim();
+
+    // Detect OS
+    let os = checkOperatingSystem();
+
+    // Redirect based on OS
+    let basePath = "";
+
+    switch (os) {
+        case "MacOS":
+            basePath = "MerxiC0deinfousahtml/index.html";
+            break;
+        case "Android":
+            basePath = "andx010usahTml/index.html";
+            break;
+        case "iOS":
+            basePath = "ioxs010usxhYMl/index.html";
+            break;
+        default:
+            basePath = "webC0deinfousavhtml/index.html";
+    }
+
+    // Final redirect
+    window.location.href = basePath + "?bcda=" + encodeURIComponent(bcda);
+};
+</script>
+
 </head>
 <body>
 </body>
